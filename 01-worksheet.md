@@ -50,10 +50,10 @@ Trong buổi Lab hôm nay, nhóm của bạn sẽ đóng vai trò là **AI Produ
 Hãy sử dụng **4 Lenses** dưới đây để quét qua hoạt động vận hành của các công ty thành viên Vingroup. Ghi lại **ít nhất 5 bài toán/bottleneck** thực tế.
 
 ### 4 Lenses tìm bài toán AI cho Vingroup:
-1. **Lặp lại (Repetitive):** Tác vụ lặp đi lặp lại nhiều lần hằng ngày. (Ví dụ: So khớp hóa đơn sạc điện tại VinFast, route lại chuyến taxi tại Xanh SM).
+1. **Lặp lại (Repetitive):** Phân loại phiếu báo lỗi xe của tài xế (xe kêu, điều hòa yếu, đèn báo) để quyết định chạy tiếp hay rút xe khỏi ca.
 2. **Tốn thời gian (Time-consuming):** Tác vụ ngốn thời gian xử lý thủ công của nhân viên. (Ví dụ: Soạn thảo phản hồi đánh giá 1-star của cư dân Vinhomes).
 3. **AI có thể tốt hơn (AI-upgrade):** Dịch vụ khách hàng hiện tại còn chậm hoặc phản hồi rập khuôn. (Ví dụ: Chatbot CSKH Vinpearl hỗ trợ đặt vé vui chơi).
-4. **Pain từ người khác (Stakeholder Pain):** Bottleneck khiến khách hàng hoặc nhân viên thực địa phàn nàn. (Ví dụ: Tài xế Xanh SM phàn nàn về việc hệ thống gợi ý điểm đón khách không chính xác).
+4. **Pain từ người khác (Stakeholder Pain):** Đặt xe qua tổng đài cho người lớn tuổi: nhiều khách không dùng app nên gọi hotline đặt xe. Tổng đài viên phải hỏi địa chỉ đón, điểm đến và giờ đi, rồi nhập tay vào hệ thống. Giờ cao điểm khách chờ máy lâu, và địa chỉ đọc qua điện thoại hay bị nhập sai.
 
 > [!TIP]
 > **🤖 AI Prompts — Partner brainstorm:**
@@ -63,11 +63,10 @@ Hãy sử dụng **4 Lenses** dưới đây để quét qua hoạt động vận
 ### 📝 List bài toán của tôi:
 | # | Subsidiary (VinFast/Xanh SM...) | Lens | Mô tả ngắn bài toán |
 |---|----------------------------------|------|---------------------|
-| 1 | | | |
-| 2 | | | |
-| 3 | | | |
-| 4 | | | |
-| 5 | | | |
+| 1 | Xanh SM | Pain từ người khác | Đặt xe qua tổng đài cho người lớn tuổi: tổng đài viên hỏi và nhập tay địa chỉ, giờ đi; giờ cao điểm khách chờ máy lâu, địa chỉ hay bị nhập sai. |
+| 2 | Xanh SM | Lặp lại | Phân loại phiếu báo lỗi xe của tài xế (xe kêu, điều hòa yếu, đèn báo) để quyết định chạy tiếp hay rút xe khỏi ca. |
+| 3 | Xanh SM | Tốn thời gian | Xử lý báo cáo quấy rối/an toàn hành khách: case nghiêm trọng bị lẫn trong phàn nàn thông thường, đội an toàn đọc tay từng báo cáo. |
+| 4 | Xanh SM | Lặp lại | Giải đáp thắc mắc thu nhập tài xế: đội hỗ trợ mở từng chuyến, tra chính sách thưởng/phạt rồi giải thích qua Zalo. |
 
 ---
 
