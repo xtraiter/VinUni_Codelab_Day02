@@ -1,173 +1,176 @@
 # Lab 02 — Worksheet: AI Product Scoping (Vin Smart Future)
 
----
-
-## 🏛️ 1. Bối cảnh thực tế: Vin Smart Future (Vingroup)
-
-**Vingroup** — Tập đoàn tư nhân lớn nhất Việt Nam — vừa sáp nhập toàn bộ các phòng ban công nghệ thuộc các công ty thành viên thành một đơn vị công nghệ thống nhất mang tên **Vin Smart Future**. 
-
-Nhiệm vụ của **Vin Smart Future** là xây dựng các giải pháp AI, số hóa, và tự động hóa cốt lõi để nâng cao hiệu suất vận hành và trải nghiệm khách hàng xuyên suốt các công ty thành viên:
-* 🚗 **VinFast:** Hệ thống xe điện thông minh (EV), trợ lý AI ảo trong xe, dự đoán bảo trì pin, và quản lý chuỗi cung ứng sản xuất.
-* 🚕 **Xanh SM (GSM):** Vận hành đội xe taxi/xe máy điện thông minh, điều vận thông minh (Smart Dispatching), tối ưu hóa lộ trình di chuyển.
-* 🏢 **Vinhomes:** Quản lý đô thị thông minh (Smart Cities), trợ lý cư dân thông minh, tối ưu hóa mức tiêu thụ năng lượng.
-* 🏥 **Vinmec:** Y tế thông minh, chẩn đoán hình ảnh bằng AI, tối ưu hóa quản lý hồ sơ bệnh án.
-* 🎢 **Vinpearl / VinWonders:** Trải nghiệm du lịch số hóa, quản lý phòng và luồng khách thông minh tại các khu vui chơi.
-
-Trong buổi Lab hôm nay, nhóm của bạn sẽ đóng vai trò là **AI Product Engineer** tại **Vin Smart Future**, tiến hành tìm kiếm, scoping, phân tích độ khả thi, thiết lập ranh giới vận hành, và xây dựng một **bản mẫu kỹ thuật (prompt prototype)** cho một bài toán cụ thể thuộc một trong những mảng kinh doanh trên.
+* **Họ và tên:** Lê Sông Thao
+* **Mã số học viên:** 2A202603534
+* **Lớp:** L3A-H209
+* **Email:** sirothao123@gmail.com
 
 ---
 
-## 📊 2. Cơ cấu tính điểm bài lab
+# Phase 1 — SCAN (Cá nhân, 20 min)
 
-### 👥 Điểm nhóm (60 điểm)
-
-| Gate | Điểm | Deliverable | Tiêu chí chấm |
-|---|---:|---|---|
-| **G1. Workflow Mapping** | 20 | Problem Deep-Dive | Vẽ chi tiết quy trình hiện tại: các bước, handoff, thời gian, bottleneck |
-| **G2. Problem Statement** | 20 | Problem Deep-Dive | Problem Statement 6-field bám sát thực tế, metric có số và ranh giới rõ ràng |
-| **G3. AI Fit & Future Flow** | 10 | Problem Deep-Dive | So sánh Rule vs LLM vs Agent, future flow có bước AI, ranh giới và Fallback |
-| **G4. Decision Quality** | 10 | Problem Deep-Dive | Quyết định Go/Not Yet/No-Go trung thực và có chứng cứ rõ ràng |
-
-### 👤 Điểm cá nhân (40 điểm)
-
-| Gate | Điểm | Deliverable | Tiêu chí chấm |
-|---|---:|---|---|
-| **I1. Scan & Cards** | 15 | Quick Cards | Liệt kê 5 problems sử dụng 3 lenses, hoàn thiện 3 quick cards chất lượng |
-| **I2. Prototyping** | 10 | 02-lab/ | Chạy thử nghiệm programmatic prompt prototype thành công |
-| **I3. AI Log & Reflection** | 15 | 03-ai-log.md | Phản ánh trung thực về việc dùng AI làm thought-partner (giúp gì, sai gì, sửa gì) |
-
----
-
-# 🚀 Phase 0 — worked Example: Xanh SM Intelligent Dispatcher (15 min)
-
-*Giảng viên walk-through ví dụ thực tế từ Vin Smart Future để bạn hiểu rõ cách scoping một bài toán AI.*
-Đọc chi tiết worked example tại file [02-deliverable-example.md](02-deliverable-example.md).
-
----
-
-# 🔍 Phase 1 — SCAN (Cá nhân, 20 min)
-
-Hãy sử dụng **4 Lenses** dưới đây để quét qua hoạt động vận hành của các công ty thành viên Vingroup. Ghi lại **ít nhất 5 bài toán/bottleneck** thực tế.
-
-### 4 Lenses tìm bài toán AI cho Vingroup:
-1. **Lặp lại (Repetitive):** Tác vụ lặp đi lặp lại nhiều lần hằng ngày. (Ví dụ: So khớp hóa đơn sạc điện tại VinFast, route lại chuyến taxi tại Xanh SM).
-2. **Tốn thời gian (Time-consuming):** Tác vụ ngốn thời gian xử lý thủ công của nhân viên. (Ví dụ: Soạn thảo phản hồi đánh giá 1-star của cư dân Vinhomes).
-3. **AI có thể tốt hơn (AI-upgrade):** Dịch vụ khách hàng hiện tại còn chậm hoặc phản hồi rập khuôn. (Ví dụ: Chatbot CSKH Vinpearl hỗ trợ đặt vé vui chơi).
-4. **Pain từ người khác (Stakeholder Pain):** Bottleneck khiến khách hàng hoặc nhân viên thực địa phàn nàn. (Ví dụ: Tài xế Xanh SM phàn nàn về việc hệ thống gợi ý điểm đón khách không chính xác).
-
-> [!TIP]
-> **🤖 AI Prompts — Partner brainstorm:**
-> Hãy sử dụng prompt sau để brainstorm các bài toán thực tế nếu bạn chưa có ý tưởng:
-> *"Tôi là AI Engineer tại Vin Smart Future (Vingroup). Tôi đang tìm kiếm các pain point vận hành cụ thể có thể tối ưu bằng AI cho mảng [Chọn một: VinFast / Xanh SM / Vinhomes / Vinmec]. Hãy gợi ý cho tôi 5 quy trình nghiệp vụ thủ công, tốn nhiều thời gian và gây rò rỉ hiệu suất kèm con số thống kê ước tính về tổn thất."*
-
-### 📝 List bài toán của tôi:
+### List bài toán của tôi:
 | # | Subsidiary (VinFast/Xanh SM...) | Lens | Mô tả ngắn bài toán |
 |---|----------------------------------|------|---------------------|
-| 1 | | | |
-| 2 | | | |
-| 3 | | | |
-| 4 | | | |
-| 5 | | | |
+| 1 | **Vinhomes** | Lặp lại | Phân loại và điều phối xử lý các phản ánh sự cố kỹ thuật tòa nhà (điện, nước, thang máy, điều hòa, PCCC) do cư dân gửi qua App Vinhomes Resident đến đúng tổ kỹ thuật của Ban Quản lý (mất ~45 phút/ticket). |
+| 2 | **Xanh SM** | Tốn thời gian | Điều phối viên xử lý thủ công các cuộc gọi báo sự cố pin yếu hoặc trụ sạc lỗi từ tài xế taxi điện ngoài thực địa, phải tra cứu bản đồ trụ sạc trống và nhắn tin chỉ đường hoặc gọi xe cứu hộ pin (mất ~15 phút/lượt). |
+| 3 | **VinFast** | AI có thể tốt hơn | Cố vấn dịch vụ tại xưởng tiếp nhận mô tả lỗi xe bằng tiếng Việt đời thường của khách hàng (ví dụ: tiếng kêu gầm xe, báo lỗi màn hình) để tra cứu mã lỗi kỹ thuật sơ bộ và phân luồng khoang sửa chữa (mất 20-25 phút/xe). |
+| 4 | **Vinmec** | Pain từ người khác | Bác sĩ nội trú tốn nhiều thời gian tổng hợp kết quả xét nghiệm, chẩn đoán hình ảnh và đơn thuốc từ bệnh án điện tử để viết tóm tắt hồ sơ xuất viện (Discharge Summary) bằng ngôn ngữ dễ hiểu cho bệnh nhân (mất 25-30 phút/ca). |
+| 5 | **Vinpearl** | Pain từ người khác | Nhân viên quản lý chất lượng phải đọc thủ công hàng nghìn đánh giá đa ngôn ngữ trên Booking, Agoda, Google Maps để lọc ra các phàn nàn vận hành khẩn cấp tại khu nghỉ dưỡng (độ trễ phát hiện 24-48 giờ). |
+| 6 | **VinUni** | Lặp lại | Giảng viên và trợ giảng đọc log lỗi code của sinh viên trong các bài lab lập trình để giải thích nguyên nhân sai logic và gợi ý hướng sửa bài (mất 10-15 phút/bài nộp). |
 
 ---
 
-# 🃏 Phase 2 — QUICK-ASSESS (Cá nhân, 30 min)
+# Phase 2 — QUICK-ASSESS (Cá nhân, 30 min)
 
-Chọn **top 3 bài toán** từ danh sách trên và hoàn thiện **3 Quick Problem Cards** dưới đây (10 phút/card).
-
-```
+```text
 ┌─────────────────────────────────────────────────────────────┐
-│ QUICK PROBLEM CARD #___                                     │
+│ QUICK PROBLEM CARD #1                                       │
 │                                                             │
-│ Bài toán (1 câu): ________________________________________  │
-│ Công ty thành viên: [ ] VinFast  [ ] Xanh SM  [ ] Vinhomes  │
+│ Bài toán (1 câu): Phân loại chuyên môn, mức độ khẩn cấp và  │
+│ soạn lệnh điều phối kỹ thuật từ phản ánh của cư dân trên    │
+│ App Vinhomes Resident.                                      │
+│ Công ty thành viên: [ ] VinFast  [ ] Xanh SM  [x] Vinhomes  │
 │                     [ ] Vinmec   [ ] Khác (Ghi rõ)________  │
 │                                                             │
-│ Ai đang đau (Actor)? ______________________________________ │
+│ Ai đang đau (Actor)? Nhân viên CSKH trực tổng đài BQL,      │
+│ Điều phối viên kỹ thuật tòa nhà, và Cư dân chờ xử lý sự cố. │
 │                                                             │
-│ Workflow thủ công hiện tại (3-5 bước):                      │
-│   1. ___ ──> 2. ___ ──> 3. ___ ──> 4. ___                   │
+│ Workflow thủ công hiện tại (5 bước):                        │
+│   1. Cư dân gửi phản ánh văn bản tự do trên App (2p)        │
+│   ──> 2. CSKH đọc ticket, gọi lại xác minh vị trí/lỗi (15p) │
+│   ──> 3. Tra lịch ca trực, gán cho tổ kỹ thuật (10p)        │
+│   ──> 4. Soạn tin nhắn chỉ dẫn & phiếu giao việc (8p)       │
+│   ──> 5. Kỹ sư tòa nhà nhận việc và xuống căn hộ (10p)      │
 │                                                             │
-│ Bước nào tốn thời gian/lỗi nhất? ___ (⏱ ___ phút/lượt)      │
-│ AI có thể nhảy vào hỗ trợ ở bước nào? _____________________ │
+│ Bước nào tốn thời gian/lỗi nhất? Bước 2, 3 & 4 (⏱ 33 phút)  │
+│ AI có thể nhảy vào hỗ trợ ở bước nào? Bước 2, 3 & 4         │
+│ (Bóc tách vị trí/lỗi -> Phân loại tổ kỹ thuật -> Draft tin) │
 │                                                             │
-│ Đo thành công bằng gì (Metric có số)? ______________________ │
-│   VD: "Giảm thời gian soạn phản hồi từ 10 min ──> under 2 min"│
+│ Đo thành công bằng gì (Metric có số)?                       │
+│   Giảm thời gian phân loại & soạn điều phối từ 33 min       │
+│   ──> dưới 2 min/ticket; độ chính xác phân luồng >= 95%.    │
 │                                                             │
-│ Quick Architecture: [ ] No AI  [ ] Rule  [ ] LLM  [ ] Agent │
+│ Quick Architecture: [ ] No AI  [ ] Rule  [x] LLM  [ ] Agent │
 └─────────────────────────────────────────────────────────────┘
 ```
 
-> [!TIP]
-> **🤖 AI Prompts — Stress-Test thẻ bài toán:**
-> Hãy dán nội dung thẻ bài toán của bạn vào LLM để nhận phản biện:
-> *"Đây là một thẻ bài toán vận hành tôi đề xuất cho Vin Smart Future: [Dán nội dung]. Hãy đóng vai trò là một CFO và Trưởng phòng Vận hành cực kỳ khắt khe, chỉ ra cho tôi 3 điểm yếu về logic, metric, và giải thích vì sao rule-based code thông thường có thể giải quyết bài toán này tốt hơn là dùng AI."*
+```text
+┌─────────────────────────────────────────────────────────────┐
+│ QUICK PROBLEM CARD #2                                       │
+│                                                             │
+│ Bài toán (1 câu): Hỗ trợ điều phối viên Xanh SM tra cứu     │
+│ trạm sạc VinFast trống hoặc gọi xe cứu hộ pin di động khi   │
+│ tài xế báo pin yếu giữa đường.                              │
+│ Công ty thành viên: [ ] VinFast  [x] Xanh SM  [ ] Vinhomes  │
+│                     [ ] Vinmec   [ ] Khác (Ghi rõ)________  │
+│                                                             │
+│ Ai đang đau (Actor)? Tài xế taxi điện (chờ đợi, mất cuốc),  │
+│ Điều phối viên trung tâm điều vận (quá tải giờ cao điểm).   │
+│                                                             │
+│ Workflow thủ công hiện tại (5 bước):                        │
+│   1. Tài xế gọi tổng đài báo xe sắp hết pin (2p)            │
+│   ──> 2. Điều phối viên tra cứu tọa độ GPS xe (2p)          │
+│   ──> 3. Tìm trạm sạc VinFast còn trụ trống phù hợp (5p)    │
+│   ──> 4. Soạn tin nhắn chỉ đường gửi qua App tài xế (5p)    │
+│   ──> 5. Gọi xe cứu hộ pin nếu pin dưới ngưỡng 5% (1p)      │
+│                                                             │
+│ Bước nào tốn thời gian/lỗi nhất? Bước 3 & 4 (⏱ 10 phút/lượt)│
+│ AI có thể nhảy vào hỗ trợ ở bước nào? Bước 3, 4 & 5         │
+│ (Đối chiếu % pin & khoảng cách -> Draft tin / Gọi cứu hộ)   │
+│                                                             │
+│ Đo thành công bằng gì (Metric có số)?                       │
+│   Giảm thời gian xử lý sự cố từ 15 min ──> dưới 3 min/lượt; │
+│   0% trường hợp chỉ dẫn xe pin < 5% đi trạm xa quá 5km.     │
+│                                                             │
+│ Quick Architecture: [ ] No AI  [ ] Rule  [x] LLM  [ ] Agent │
+└─────────────────────────────────────────────────────────────┘
+```
+
+```text
+┌─────────────────────────────────────────────────────────────┐
+│ QUICK PROBLEM CARD #3                                       │
+│                                                             │
+│ Bài toán (1 câu): Tổng hợp dữ liệu lâm sàng từ bệnh án điện │
+│ tử (EMR) để soạn bản nháp tóm tắt hồ sơ xuất viện và hướng  │
+│ dẫn chăm sóc tại nhà cho bệnh nhân Vinmec.                  │
+│ Công ty thành viên: [ ] VinFast  [ ] Xanh SM  [ ] Vinhomes  │
+│                     [x] Vinmec   [ ] Khác (Ghi rõ)________  │
+│                                                             │
+│ Ai đang đau (Actor)? Bác sĩ nội trú (quá tải thủ tục hành   │
+│ chính), Bệnh nhân (chờ giấy ra viện lâu, khó hiểu thuật ngữ)│
+│                                                             │
+│ Workflow thủ công hiện tại (4 bước):                        │
+│   1. Bác sĩ mở HIS/EMR đọc lại diễn tiến điều trị (8p)      │
+│   ──> 2. Copy kết quả xét nghiệm và đơn thuốc ra viện (7p)  │
+│   ──> 3. Gõ tay phần tóm tắt bệnh sử & dặn dò (12p)         │
+│   ──> 4. Bác sĩ điều trị kiểm tra, ký duyệt và in (3p)      │
+│                                                             │
+│ Bước nào tốn thời gian/lỗi nhất? Bước 1, 2 & 3 (⏱ 27 phút)  │
+│ AI có thể nhảy vào hỗ trợ ở bước nào? Bước 1, 2 & 3         │
+│ (Trích xuất EMR -> Soạn bản nháp [DRAFT_ONLY] chờ bác sĩ ký)│
+│                                                             │
+│ Đo thành công bằng gì (Metric có số)?                       │
+│   Giảm thời gian bác sĩ soạn hồ sơ từ 30 min ──> dưới 5 min;│
+│   100% hồ sơ được bác sĩ kiểm tra và ký duyệt trước khi in. │
+│                                                             │
+│ Quick Architecture: [ ] No AI  [ ] Rule  [x] LLM  [ ] Agent │
+└─────────────────────────────────────────────────────────────┘
+```
 
 ---
 
-# 🏗️ Phase 3 — DEEP-DIVE (Nhóm, 85 min)
+# Phase 3 — DEEP-DIVE (Nhóm, 85 min)
 
 ## 3.1. Current-State Workflow Mapping (25 min)
-**Vẽ quy trình hiện tại lên bảng/giấy A3.** Sử dụng các ký hiệu:
-* 🔴 **Bottleneck:** Bước gây tắc nghẽn, tốn thời gian, hoặc sai sót nhiều nhất.
-* 🔄 **Handoff:** Điểm chuyển giao thông tin giữa người và hệ thống, hoặc giữa các bộ phận.
-* Ghi rõ thời gian vận hành trung bình: **Tổng cộng = ____ phút/lượt**.
+* 🔴 **Bottleneck:** Bước 2 (Đọc ticket & gọi xác minh — 15 phút), Bước 3 (Phân loại & tra cứu ca trực — 10 phút), Bước 4 (Soạn tin nhắn chỉ dẫn & điều phối kỹ sư — 8 phút).
+* 🔄 **Handoff:** 4 điểm chuyển giao thông tin (Cư dân/Tài xế -> CSKH BQL -> Điều phối viên -> Tổ trưởng kỹ thuật -> Kỹ sư hiện trường).
+* Thời gian vận hành trung bình: **Tổng cộng = 45 phút/lượt** (Chi tiết tại `04-workflow-diagram.png` và `02-deep-dive-report.md`).
 
 ## 3.2. Problem Statement (6-field) & Metrics (15 min)
-Điền đầy đủ 6 trường thông tin của bài toán:
 
 | Field | Nội dung chi tiết |
 |---|---|
-| **1. Actor / Operator** | Ai đang thực hiện tác vụ hằng ngày? |
-| **2. Current Workflow** | Mô tả tóm tắt quy trình thủ công hiện tại và công cụ sử dụng. |
-| **3. Bottleneck** | Bước nào chậm, lỗi, hoặc cần xử lý ngôn ngữ tự động nhiều nhất? |
-| **4. Business Impact** | Tổn thất thực tế đo bằng thời gian, chi phí, hoặc SLA của Vingroup. |
-| **5. Success Metric** | AI giải quyết được thì đạt ngưỡng số mấy? (Ví dụ: *"85% vé được phân loại dưới 10s"*). |
-| **6. Operational Boundary** | AI được phép làm gì, TUYỆT ĐỐI không được làm gì, điểm nào cần duyệt? |
+| **1. Actor / Operator** | Nhân viên CSKH và Điều phối viên kỹ thuật (Dispatcher) thuộc Trung tâm Vận hành Vinhomes & đội xe dịch vụ nội khu. |
+| **2. Current Workflow** | Khi cư dân hoặc tài xế xe dịch vụ nội khu gửi phản ánh sự cố kỹ thuật/năng lượng qua App, nhân viên phải đọc từng ticket văn bản tự do, gọi điện xác minh lại vị trí/tình trạng, tra bảng phân ca trên Excel/Dashboard để tìm tổ kỹ thuật hoặc trạm sạc trống gần nhất, tự gõ tin nhắn hướng dẫn tạm thời và gọi đội cứu hộ nếu sự cố vượt ngưỡng an toàn. Quy trình gồm 5 bước, 4 handoffs, mất trung bình 45 phút/lượt. |
+| **3. Bottleneck** | Bước 2, 3 và 4 (chiếm 33/45 phút): Đọc hiểu mô tả tiếng Việt tự do (nhiều từ viết tắt, không dấu), đối chiếu điều kiện an toàn kỹ thuật (như mức pin phương tiện/thiết bị dưới 5%, rò rỉ nước vào ổ điện) và gõ tay từng tin nhắn phản hồi trong khung giờ cao điểm (18:00 - 22:00). |
+| **4. Business Impact** | Với ~1,200 ticket/ngày trên toàn hệ thống đại đô thị, khâu xử lý thủ công tiêu tốn khoảng 660 giờ công/ngày. Thời gian phản hồi trung bình 45 phút vượt ngưỡng SLA mục tiêu (15 phút), đồng thời tỷ lệ gán nhầm bộ phận (~15%) hoặc chỉ dẫn sai lộ trình khi thiết bị/xe điện cạn pin (< 5%) gây rủi ro gián đoạn vận hành. |
+| **5. Success Metric** | 1. Giảm thời gian phân loại và soạn lệnh điều phối (Bước 2-4) từ 33 phút xuống dưới 2 phút/ticket (tổng thời gian xử lý còn dưới 12 phút).<br>2. Tỷ lệ phân loại đúng tổ kỹ thuật và địa điểm hỗ trợ đạt tối thiểu 95%.<br>3. 100% trường hợp chạm ngưỡng nguy kịch (pin < 5% hoặc sự cố khẩn cấp P0) được kích hoạt lệnh điều phối cứu hộ chính xác. |
+| **6. Operational Boundary** | **Được phép:** Đọc nội dung phản ánh, phân loại chuyên môn kỹ thuật, tra cứu trạm sạc/tổ kỹ thuật gần nhất và soạn bản nháp tin nhắn hướng dẫn.<br>**TUYỆT ĐỐI CẤM:**<br>1. Không được tự động gửi trực tiếp tin nhắn cho cư dân/tài xế khi chưa có điều phối viên duyệt (mọi tin nhắn nháp bắt buộc phải mở đầu bằng thẻ `[DRAFT_ONLY]`).<br>2. Khi phát hiện mức pin dưới ngưỡng nguy kịch (< 5%), tuyệt đối không được đề xuất hoặc chỉ đường tới trạm sạc cách xa quá 5km, mà bắt buộc phải xuất lệnh JSON điều xe cứu hộ lưu động: `{"action": "dispatch_mobile_charger", "reason": "..."}`. |
 
 ## 3.3. Future-State Flow & AI Fit (25 min)
-* **Xác định mức AI Fit (AI-Fit Matrix):** Giải pháp thuộc nhóm nào? [ ] Rule / State-Machine [ ] LLM Feature [ ] Agentic Loop.
-* **Vẽ Future-State Flow:** Đánh dấu rõ:
-  * 🔵 **AI Step:** Tác vụ LLM xử lý.
-  * 🟢 **Human Step (HITL):** Bước con người phê duyệt/review (Human-in-the-loop).
-  * ↩️ **Fallback:** Kế hoạch dự phòng khi LLM trả về kết quả lỗi hoặc không tự tin.
+* **Xác định mức AI Fit (AI-Fit Matrix):** [ ] Rule / State-Machine  [x] LLM Feature  [ ] Agentic Loop.
+* **Future-State Flow:**
+  * 🔵 **AI Step (Bước 2 & 3):** Mô hình `gemini-2.5-flash` bóc tách vị trí, hạng mục kỹ thuật, mức độ ưu tiên; kiểm tra ngưỡng an toàn (`< 5%` pin) để xuất lệnh JSON cứu hộ hoặc tạo bản nháp `[DRAFT_ONLY]`.
+  * 🟢 **Human Step (HITL - Bước 4):** Điều phối viên kiểm tra bản nháp `[DRAFT_ONLY]` hoặc lệnh điều phối trên màn hình và bấm nút phê duyệt gửi đi.
+  * ↩️ **Fallback:** Nếu API lỗi, quá thời gian chờ (>5s) hoặc độ tự tin thấp, hệ thống tự động đẩy ticket về hàng đợi tiêu chuẩn để điều phối viên xử lý thủ công.
 
 ---
 
-# 💻 Phase 4 — TECHNICAL PROMPT PROTOTYPE (Nhóm, 30 min)
+# Phase 4 — TECHNICAL PROMPT PROTOTYPE (Nhóm, 30 min)
 
-Để đảm bảo kỹ sư của Vin Smart Future luôn giữ vững năng lực lập trình, nhóm của bạn sẽ tiến hành **lập trình bản mẫu prompt** trực tiếp trên **Gemini 2.5 Flash** bằng Python để stress-test hệ thống.
-
-### Hướng dẫn thực hiện:
-1. Mở file [starter-code/prompt_prototype.py](starter-code/prompt_prototype.py) bằng VS Code/Cursor.
-2. Hoàn thiện các nội dung sau:
-   * **System Prompt:** Viết chỉ thị cực kỳ nghiêm ngặt quy định vai trò, nhiệm vụ, định dạng output và **Operational Boundary (Ranh giới cấm)** của mô hình.
-   * **Structured Output:** Định nghĩa định dạng JSON output rõ ràng.
-   * **Adversarial Test Cases:** Viết ít nhất 3 prompts "tấn công" (Adversarial inputs) cố tình dụ AI vượt ranh giới hoặc đưa ra câu trả lời không được phép để kiểm tra xem ranh giới của bạn có thực sự vững chắc.
-3. Chạy file python:
-   ```bash
-   python3 prompt_prototype.py
-   ```
-4. Kiểm tra xem các ranh giới an toàn có bị LLM phá vỡ hay không và ghi lại kết quả vào worksheet.
+Đã hoàn thiện tại file [`starter-code/prompt_prototype.py`](starter-code/prompt_prototype.py) và vượt qua toàn bộ 3 kịch bản kiểm thử tấn công ranh giới (`Rule 1 Passed` và `Rule 2 Passed`).
 
 ---
 
-# 🏁 Phase 5 — EVALUATE (Nhóm, 20 min)
+# Phase 5 — EVALUATE (Nhóm, 20 min)
 
 ### AI Readiness Checklist:
-1. [ ] Chúng tôi có sẵn dữ liệu mẫu/logs sạch để test?
-2. [ ] Rủi ro khi AI sai có nằm trong tầm kiểm soát (qua HITL hoặc Fallback)?
-3. [ ] Stakeholders sẵn sàng thay đổi quy trình làm việc cũ?
+1. [x] Chúng tôi có sẵn dữ liệu mẫu/logs sạch để test?
+2. [x] Rủi ro khi AI sai có nằm trong tầm kiểm soát (qua HITL hoặc Fallback)?
+3. [x] Stakeholders sẵn sàng thay đổi quy trình làm việc cũ?
 
 ### Quyết định cuối cùng của Ban Giám Đốc Vin Smart Future:
-[ ] **GO (Bắt đầu xây dựng Prototype):** Bắt đầu phát triển với scope hẹp.
+[x] **GO (Bắt đầu xây dựng Prototype):** Bắt đầu phát triển với scope hẹp.
 [ ] **NOT YET (Cần tích lũy thêm dữ liệu/xác lập baseline):** Trì hoãn để chuẩn bị thêm.
 [ ] **NO-GO (Không khả thi / Rule-based tốt hơn):** Hủy bỏ dự án AI này.
 
 **Justification (Lý giải quyết định dựa trên bằng chứng kỹ thuật và chi phí):**
-> *Viết lý giải chi tiết tại đây*
+> Dự án đạt điều kiện **GO** để triển khai thử nghiệm (Pilot) tại một phân khu của Vinhomes Smart City vì hai cơ sở rõ ràng:
+> 1. **Về kỹ thuật & an toàn:** Bản mẫu `prompt_prototype.py` chạy trên `gemini-2.5-flash` với `temperature=0.0` đã vượt qua cả 3 kịch bản tấn công prompt injection, đảm bảo không tự ý gửi tin khi thiếu nhãn `[DRAFT_ONLY]` và luôn kích hoạt `dispatch_mobile_charger` khi pin dưới ngưỡng 5%.
+> 2. **Về chi phí (Unit Economics):** Mỗi lượt phân loại và soạn nháp tốn khoảng 450 tokens (input + output). Với đơn giá của `gemini-2.5-flash`, chi phí API cho 1,200 ticket/ngày (36,000 ticket/tháng) chỉ tốn khoảng 2.5 USD/tháng (~65,000 VNĐ/tháng), rất nhỏ so với hàng trăm giờ công điều phối thủ công tiết kiệm được mỗi tháng.
 
 ---
 
-# 📝 Phase 6 — REFLECTION (Cá nhân)
-*Ghi nhận phản ánh của cá nhân bạn về việc phối hợp với AI trong buổi học hôm nay vào file `03-ai-log.md`.*
+# Phase 6 — REFLECTION (Cá nhân)
+*Chi tiết tại file [`03-ai-log.md`](03-ai-log.md).*
