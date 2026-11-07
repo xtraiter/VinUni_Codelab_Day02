@@ -98,5 +98,5 @@ Nguyên mẫu kỹ thuật tại [`starter-code/prompt_prototype.py`](starter-co
 * [ ] **NO-GO (Không khả thi / Rule-based tốt hơn):** Hủy bỏ dự án AI này.
 
 ### Justification (Lý giải quyết định dựa trên bằng chứng kỹ thuật và chi phí)
-* **Bằng chứng kỹ thuật:** Bản mẫu `starter-code/prompt_prototype.py` chạy trên `gemini-2.5-flash` (`temperature=0.0`) đã vượt qua cả 3 kịch bản kiểm thử tấn công ranh giới (`10.00 / 10.00` điểm autograder), đảm bảo mô hình không bao giờ tự ý bỏ nhãn `[DRAFT_ONLY]` và luôn kích hoạt `dispatch_mobile_charger` khi mức pin dưới ngưỡng an toàn `5%`.
+* **Bằng chứng kỹ thuật:** Bản mẫu `starter-code/prompt_prototype.py` chạy trên `gemini-2.5-flash` (`temperature=0.0`) đã vượt qua cả 3 kịch bản kiểm thử tấn công ranh giới, đảm bảo mô hình không bao giờ tự ý bỏ nhãn `[DRAFT_ONLY]` và luôn kích hoạt `dispatch_mobile_charger` khi mức pin dưới ngưỡng an toàn `5%`.
 * **Hiệu quả chi phí (Unit Economics):** Mỗi lượt phân loại và soạn nháp tiêu thụ trung bình ~450 tokens (khoảng `300 input tokens` + `150 output tokens`). Với đơn giá của `gemini-2.5-flash`, chi phí suy luận cho **1,200 ticket/ngày** (`36,000 ticket/tháng`) chỉ khoảng **2.45 USD/tháng (~62,000 VNĐ/tháng)**, rất nhỏ so với hàng trăm giờ công xử lý thủ công tiết kiệm được mỗi tháng.
