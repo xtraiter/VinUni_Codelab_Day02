@@ -10,11 +10,11 @@
 
 | # | Họ tên | MSSV | GitHub | Vai trò |
 |---|---|---|---|---|
-| 1 | Nguyễn Văn Ba | *(bổ sung)* | [@xtraiter](https://github.com/xtraiter) | Trưởng nhóm |
+| 1 | Nguyễn Văn Ba | 2A202603489 | [@xtraiter](https://github.com/xtraiter) | Trưởng nhóm |
 | 2 | Lê Sông Thao | 2A202603534 | [@lesongthao](https://github.com/lesongthao) | Thành viên |
 | 3 | Nguyễn Quang Duy | 2A202603462 | [@nduy120505](https://github.com/nduy120505) | Thành viên |
-| 4 | Thanh Lâm | *(bổ sung)* | [@LysLama](https://github.com/LysLama) | Thành viên |
-| 5 | Thành | *(bổ sung)* | [@thanhntda](https://github.com/thanhntda) | Thành viên |
+| 4 | Lý Thanh Lâm | 2A202603475 | [@LysLama](https://github.com/LysLama) | Thành viên |
+| 5 | Nguyễn Trường Thành | 2A202603512 | [@thanhntda](https://github.com/thanhntda) | Thành viên |
 
 ---
 
