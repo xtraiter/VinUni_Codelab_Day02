@@ -1,9 +1,13 @@
 # Lab 02 — AI Log & Reflection (Phase 6)
 
-* **Họ và tên:** Lê Sông Thao
-* **Mã số học viên:** 2A202603534
-* **Lớp:** L3A-H209
-* **Email:** sirothao123@gmail.com
+* **Học viên thực hiện nhánh (`lesongthao`):** Lê Sông Thao — MSSV: `2A202603534` — Email: `sirothao123@gmail.com` — Lớp: `L3A-H209`
+* **Tên nhóm / Repository nhóm:** `xtraiter/VinUni_Codelab_Day02` (L3A-H209)
+* **Danh sách thành viên nhóm:**
+  1. Nguyễn Văn Ba (Trưởng nhóm - `@xtraiter`) — Email: `tetutetua1@gmail.com`
+  2. Lê Sông Thao (MSSV: `2A202603534` - `@lesongthao`) — Email: `sirothao123@gmail.com`
+  3. Nguyễn Quang Duy (MSSV: `2A202603462` - `@nduy120505`) — Email: `nduy120505@gmail.com`
+  4. Thanh Lâm (`@LysLama`) — Email: `thanhlam211204@gmail.com`
+  5. Thành (`@thanhntda`)
 
 ---
 
