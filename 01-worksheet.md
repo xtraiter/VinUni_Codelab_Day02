@@ -105,26 +105,115 @@ Hãy sử dụng **4 Lenses** dưới đây để quét qua hoạt động vận
 
 Chọn **top 3 bài toán** từ danh sách trên và hoàn thiện **3 Quick Problem Cards** dưới đây (10 phút/card).
 
-```
+### 🃏 QUICK PROBLEM CARD #1 — Xanh SM: Tự động đối soát GPS & Xử lý tranh chấp gian lận cuốc xe
+
+```text
 ┌─────────────────────────────────────────────────────────────┐
-│ QUICK PROBLEM CARD #___                                     │
+│ QUICK PROBLEM CARD #1                                       │
 │                                                             │
-│ Bài toán (1 câu): ________________________________________  │
-│ Công ty thành viên: [ ] VinFast  [ ] Xanh SM  [ ] Vinhomes  │
-│                     [ ] Vinmec   [ ] Khác (Ghi rõ)________  │
+│ Bài toán (1 câu): Khách hàng bị tài xế ngâm cuốc hoặc bấm   │
+│ "hoàn thành khống" né phạt hủy chuyến khiến khách bị trừ    │
+│ tiền oan; đối soát GPS và giải quyết hoàn tiền mất 2-5 ngày.│
+│ Công ty thành viên: [x] Xanh SM (GSM)                       │
 │                                                             │
-│ Ai đang đau (Actor)? ______________________________________ │
+│ Ai đang đau (Actor)? Khách hàng (bị trừ tiền oan, ức chế),  │
+│ Nhân viên CSKH & Quản lý tài xế (quá tải đối soát thủ công).│
 │                                                             │
-│ Workflow thủ công hiện tại (3-5 bước):                      │
-│   1. ___ ──> 2. ___ ──> 3. ___ ──> 4. ___                   │
+│ Workflow thủ công hiện tại (5 bước):                        │
+│   1. Khách gửi khiếu nại cuốc xe ngâm/khống qua App/Hotline │
+│   ──> 2. CSKH tạo ticket, chuyển sang bộ phận Vận hành xe   │
+│   ──> 3. Kỹ thuật viên trích xuất log GPS của xe và khách   │
+│   ──> 4. Đối soát mắt độ lệch tọa độ và thời gian di chuyển │
+│   ──> 5. Phê duyệt lệnh hoàn tiền thủ công và kỷ luật tài xế│
 │                                                             │
-│ Bước nào tốn thời gian/lỗi nhất? ___ (⏱ ___ phút/lượt)      │
-│ AI có thể nhảy vào hỗ trợ ở bước nào? _____________________ │
+│ Bước nào tốn thời gian/lỗi nhất? Bước 3-4 (⏱ 25 phút/lượt;   │
+│ tổng thời gian chờ liên phòng ban kéo dài 2-5 ngày làm việc)│
+│ AI có thể nhảy vào hỗ trợ ở bước nào? Bước 3-4-5            │
+│ (LLM phân loại khiếu nại + GPS Spatial Anomaly Detection    │
+│ tự động tính khoảng cách sai lệch giữa xe và khách -> Auto  │
+│ trigger lệnh hoàn tiền và gắn cờ gian lận tài xế).          │
 │                                                             │
-│ Đo thành công bằng gì (Metric có số)? ______________________ │
-│   VD: "Giảm thời gian soạn phản hồi từ 10 min ──> under 2 min"│
+│ Đo thành công bằng gì (Metric có số)?                        │
+│ Giảm thời gian xác minh & hoàn tiền từ 72 giờ ──> dưới 30s; │
+│ giảm 85% thời gian xử lý thủ công của đội ngũ CSKH.         │
 │                                                             │
-│ Quick Architecture: [ ] No AI  [ ] Rule  [ ] LLM  [ ] Agent │
+│ Quick Architecture: [x] Rule + LLM (LLM NLP + Rule GPS check)│
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+### 🃏 QUICK PROBLEM CARD #2 — VinFast & V-Green: Tự động giải quyết tranh chấp phí phạt chiếm dụng trụ sạc
+
+```text
+┌─────────────────────────────────────────────────────────────┐
+│ QUICK PROBLEM CARD #2                                       │
+│                                                             │
+│ Bài toán (1 câu): Chủ xe VinFast bị phạt 4.000đ/phút oan do  │
+│ trụ sạc lỗi/kẹt súng sạc nhưng Camera AI vẫn đếm giờ phạt;   │
+│ đối soát camera và log phần cứng trụ sạc thủ công mất 24h.  │
+│ Công ty thành viên: [x] VinFast & V-Green                   │
+│                                                             │
+│ Ai đang đau (Actor)? Chủ xe điện VinFast (bị phạt oan, giam │
+│ tiền, khóa ví sạc), CSKH V-Green (quá tải tra soát đa nguồn)│
+│                                                             │
+│ Workflow thủ công hiện tại (5 bước):                        │
+│   1. Khách bị trừ tiền phạt chiếm chỗ, gọi 1900 2323 89     │
+│   ──> 2. CSKH tiếp nhận biển số xe, mã trụ và giờ phát sinh │
+│   ──> 3. Kỹ thuật viên tra cứu IoT Telemetry lỗi phần cứng   │
+│   ──> 4. Trích xuất video Camera AI xác nhận thao tác cắm/rút│
+│   ──> 5. CSKH đối chiếu biên bản, gửi yêu cầu hoàn tiền ví  │
+│                                                             │
+│ Bước nào tốn thời gian/lỗi nhất? Bước 3-4 (⏱ 20 phút/ca;     │
+│ SLA phản hồi cho khách hàng hiện tại lên tới 24 giờ)         │
+│ AI có thể nhảy vào hỗ trợ ở bước nào? Bước 3-4-5            │
+│ (AI Agent đối soát đa phương thức: đọc sự kiện ngắt sạc bất  │
+│ thường từ IoT trụ + kiểm tra frame hình Camera AI -> Tự động│
+│ miễn trừ phí phạt và gửi thông báo giải thích cho chủ xe).  │
+│                                                             │
+│ Đo thành công bằng gì (Metric có số)?                        │
+│ Giảm thời gian giải quyết tranh chấp từ 24 giờ ──> dưới 1 ph;│
+│ tự động hóa 90% ca tranh chấp lỗi kỹ thuật trụ sạc.         │
+│                                                             │
+│ Quick Architecture: [x] Agent (Event Correlation Engine)    │
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+### 🃏 QUICK PROBLEM CARD #3 — VinFast: AI Co-pilot chẩn đoán lỗi xe điện & Dự báo phụ tùng Lệnh sửa chữa (RO)
+
+```text
+┌─────────────────────────────────────────────────────────────┐
+│ QUICK PROBLEM CARD #3                                       │
+│                                                             │
+│ Bài toán (1 câu): Cố vấn dịch vụ chẩn đoán chậm trước ma    │
+│ trận mã lỗi ảo sụt áp 12V và tra phụ tùng thủ công, dẫn đến │
+│ trễ hẹn RO và chịu phạt cam kết đền bù 500.000đ/xe/ngày.    │
+│ Công ty thành viên: [x] VinFast                             │
+│                                                             │
+│ Ai đang đau (Actor)? Cố vấn dịch vụ (SA - Service Advisor),  │
+│ Kỹ thuật viên xưởng dịch vụ, Chủ xe VinFast (chờ xe sửa).    │
+│                                                             │
+│ Workflow thủ công hiện tại (5 bước):                        │
+│   1. SA tiếp nhận xe và ghi nhận mô tả triệu chứng của khách │
+│   ──> 2. KTV cắm máy VDS quét mã lỗi DTC trên mạng CAN xe   │
+│   ──> 3. KTV & SA tra sổ tay hướng dẫn sửa chữa tìm lỗi gốc  │
+│   ──> 4. SA kiểm tra tồn kho phụ tùng trên ERP thủ công      │
+│   ──> 5. SA ước lượng giờ hoàn thành và ký Lệnh sửa chữa RO │
+│                                                             │
+│ Bước nào tốn thời gian/lỗi nhất? Bước 2-3-4 (⏱ 35-45 phút;   │
+│ dễ sót linh kiện liên đới làm xe nằm xưởng quá hạn cam kết) │
+│ AI có thể nhảy vào hỗ trợ ở bước nào? Bước 2-3-4            │
+│ (AI Co-pilot nhận danh sách mã lỗi + mô tả khách -> lọc nhiễu│
+│ mã lỗi ảo 12V, RAG tra cứu sơ đồ tài liệu kỹ thuật và truy   │
+│ vấn kho phụ tùng ERP -> Gợi ý thời gian cam kết RO chuẩn).   │
+│                                                             │
+│ Đo thành công bằng gì (Metric có số)?                        │
+│ Rút ngắn thời gian chẩn đoán & tạo RO từ 45 phút ──> 10 phút;│
+│ giảm 50% số xe quá hạn (tiết kiệm hàng trăm triệu đền bù).  │
+│                                                             │
+│ Quick Architecture: [x] LLM (RAG Service Manual + ERP API)  │
 └─────────────────────────────────────────────────────────────┘
 ```
 
