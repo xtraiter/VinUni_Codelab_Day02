@@ -66,7 +66,7 @@ Quy trình xử lý khiếu nại cuốc xe ngâm / hoàn thành khống hiện 
 | **3. Bottleneck** | **Bước 3 & Bước 4 (mất 25 phút/ticket):** Trích xuất dữ liệu đa nguồn và đối soát thị giác bằng mắt. Do lượng cuốc cao điểm tại Hà Nội/TP.HCM lên tới hàng trăm nghìn cuốc/ngày, ticket dồn ứ hàng nghìn ca mỗi tuần, dẫn đến thời gian phản hồi bị kéo dài tới 2–5 ngày. |
 | **4. Business Impact** | * **Tổn thất Churn Rate:** Khách hàng bị mất tiền oan cảm thấy bị lừa dối, hủy liên kết thẻ hoặc xóa app Xanh SM (rò rỉ thị phần sang Grab/Be).<br>* **Chi phí vận hành:** Mỗi ca tốn 40 phút nhân sự qua 3 phòng ban. Với ~3.000 ca khiếu nại/tháng, GSM tiêu tốn ~2.000 giờ công lao động chất lượng cao.<br>* **Xung đột nội bộ:** Tài xế bị trừ tiền/khóa app oan trong các ca định vị GPS chập chờn dưới hầm hoặc nhà cao tầng mà không được giải thích minh bạch. |
 | **5. Success Metric** | 1. **Thời gian hoàn tiền (SLA):** Rút ngắn từ **72 giờ thủ công xuống dưới 30 giây** đối với các ca gian lận rõ ràng (độ tin cậy > 90%).<br>2. **Độ chính xác đối soát (Precision):** Đạt trên **98.5%** tính đúng của quyết định hoàn tiền tự động.<br>3. **Năng suất vận hành (Efficiency):** Giảm **85%** số lượng ticket phải xử lý thủ công bằng mắt. |
-| **6. Operational Boundary (Ranh giới vận hành)** | * **AI ĐƯỢC PHÉP:** Tự động đọc nội dung khiếu nại; tự động truy xuất API GPS của xe và app khách; tính toán khoảng cách vector và độ lệch không-thời gian (Spatial-Temporal Divergence); tự động duyệt hoàn tiền cho các cuốc có giá trị **≤ 150.000 VNĐ** khi điểm bất thường (Anomaly Score) ≥ 0.90.<br>* **AI TUYỆT ĐỐI CẤM:** Không được tự ý hoàn tiền với cuốc > 150.000 VNĐ mà không có phê duyệt của con người; không được tự động khóa tài khoản/phạt trừ tiền tài xế (chỉ được gắn cờ nghi vấn và gửi đề xuất cho thanh tra con người thẩm định); không được tự ý từ chối khiếu nại của khách mà không qua bước Reviewer. |
+| **6. Operational Boundary (Ranh giới vận hành & Tuân thủ Dữ liệu)** | * **Ranh giới Kỹ thuật Nghiệp vụ:** AI được phép đọc nội dung khiếu nại; tính toán độ lệch không-thời gian (Spatial Anomaly Score); tự động đề xuất hoàn tiền cho các cuốc có giá trị **≤ 150.000 VNĐ** khi Anomaly Score ≥ 0.90. **TUYỆT ĐỐI CẤM:** Không được tự ý hoàn tiền với cuốc > 150.000 VNĐ; không được tự động khóa tài khoản hoặc trừ tiền phạt tài xế (bắt buộc Thanh tra con người ký duyệt); không được từ chối khiếu nại của khách mà không qua thẩm định viên.<br>* **Ranh giới Pháp lý & Phân quyền Dữ liệu (BẮT BUỘC):** Trong giai đoạn phát triển bản mẫu (Prototype/Pilot), **TUYỆT ĐỐI CẤM** cắm trực tiếp vào CSDL Production hay gọi API trừ tiền thật. Hệ thống bắt buộc phải chạy trên **Môi trường Sandbox với Dữ liệu Ẩn danh (Anonymized Data)**, tuân thủ nghiêm ngặt **Nghị định 13/2023/NĐ-CP về Bảo vệ Dữ liệu Cá nhân** (đã che số điện thoại, tên khách, và làm mờ tọa độ nhà riêng). |
 
 ---
 
@@ -124,84 +124,74 @@ Quy trình xử lý khiếu nại cuốc xe ngâm / hoàn thành khống hiện 
 
 # 🏁 Phase 5 — EVALUATE: Đánh giá Tính Khả thi & Quyết định Dự án
 
-### 📋 1. Bảng Kiểm Tra Độ Sẵn Sàng AI (AI Readiness Checklist) & Minh Chứng Dữ Liệu Thực Tế
+### 📋 1. Bảng Kiểm Tra Độ Sẵn Sàng AI (AI Readiness Checklist) & Nhận Diện Rào Cản Quyền Hạn
 
-Để đảm bảo tính khả thi thực chiến, toàn bộ các nguồn dữ liệu cần thiết cho giải pháp đều được đối chiếu trực tiếp với hạ tầng kỹ thuật thực tế đang vận hành tại VinFast và GSM:
+Đánh giá trung thực, khách quan về hiện trạng kỹ thuật, pháp lý và bảo mật thông tin trước khi triển khai:
 
-| STT | Tiêu chí đánh giá | Trạng thái | Nguồn dữ liệu & Minh chứng thực tế có thể lấy về được |
+| STT | Tiêu chí đánh giá | Trạng thái | Phân tích Thực tế & Rào cản Quyền hạn (Permissions & Governance) |
 |:---:|---|:---:|---|
-| 1 | **Dữ liệu mẫu & Logs lịch sử sạch** | ✅ **SẴN SÀNG 100%** | **Đầy đủ 3 nguồn dữ liệu nghiệp vụ cốt lõi:**<br>1. *Log GPS phần cứng xe điện (T-Box IoT):* Lưu trữ trên Time-series DB / AWS S3 của VinFast Connected Car Platform.<br>2. *Log sự kiện App Tài xế & Khách hàng:* Lưu trữ trên CSDL giao dịch GSM Dispatch Backend.<br>3. *Dữ liệu nhãn khiếu nại quá khứ (Ground Truth):* Hơn 25.000 ticket tranh chấp cuốc xe năm 2024–2025 đã được CSKH giải quyết trên hệ thống CRM.<br>*(Xem chi tiết bảng phân rã nguồn và API lấy về ở mục 1.1 bên dưới)*. |
-| 2 | **Kiểm soát rủi ro (HITL & Fallback)** | ✅ **SẴN SÀNG** | Ranh giới vận hành (Operational Boundary) đóng chặt qua Rule Engine:<br>* Hạn mức hoàn tự động tối đa: **≤ 150.000 VNĐ**.<br>* Chỉ tự động hoàn tiền khi Anomaly Score ≥ 0.90.<br>* Mọi cuốc > 150.000 VNĐ hoặc điểm nghi vấn (0.60 – 0.89) bắt buộc chuyển qua Human-in-the-loop (CSKH duyệt).<br>* Rủi ro thất thoát tài chính được cô lập ở mức 0%. |
-| 3 | **Sự sẵn sàng của Stakeholders** | ✅ **SẴN SÀNG** | * **Bộ phận CSKH & QA Vận hành:** Đang chịu áp lực quá tải nghiêm trọng (mỗi ca ngốn 40 phút đối soát tay qua 3 phòng ban), sẵn sàng thử nghiệm ngay để giảm tải.<br>* **Ban Giám đốc GSM & Vin Smart Future:** Đặt ưu tiên hàng đầu trong quý 1/2026 là xử lý triệt để phản ánh tiêu cực trên MXH (Otofun, Reddit) và giảm Churn Rate của khách hàng liên kết thẻ. |
+| 1 | **Dữ liệu mẫu & Logs lịch sử sạch** | ⚠️ **CẦN ĐIỀU KIỆN (CONDITIONAL)** | **Dữ liệu có tồn tại trong hệ sinh thái nhưng hiện tại CHƯA THỂ LẤY NGAY:**<br>• Dữ liệu GPS xe điện nằm tại Data Lake của VinFast Auto.<br>• Dữ liệu cuốc xe và GPS khách nằm tại Backend của GSM.<br>• Dữ liệu khiếu nại nằm tại CRM CSKH.<br>🛑 **Rào cản lớn:** VinFast và GSM là 2 pháp nhân độc lập; tọa độ GPS là dữ liệu cá nhân nhạy cảm theo **Nghị định 13/2023/NĐ-CP**. Nhóm kỹ sư AI **chưa có quyền truy cập Production API** nếu chưa có thỏa thuận chia sẻ dữ liệu (DSA) và quy trình ẩn danh hóa PII. |
+| 2 | **Kiểm soát rủi ro (HITL & Fallback)** | ✅ **SẴN SÀNG** | Ranh giới vận hành (Operational Boundary) đã được thiết kế chặt chẽ:<br>• Chỉ cho phép AI hoạt động trong môi trường Staging/Sandbox.<br>• Khống chế trần hoàn tiền ≤ 150.000 VNĐ; không trao quyền tự động chế tài tài xế.<br>• Thiết lập fallback 100% về quy trình manual review khi mất tín hiệu GPS hoặc model timeout. |
+| 3 | **Sự sẵn sàng của Stakeholders** | ✅ **SẴN SÀNG** | CSKH và Ban Điều hành GSM rất ủng hộ dự án để giảm Churn Rate, nhưng Ban Pháp chế (Legal) và An toàn thông tin (Infosec) yêu cầu phải có quy trình Audit và Sandbox dữ liệu giả lập trước khi cấp Service Account kết nối hệ thống. |
 
 ---
 
-### 🔍 1.1. Bảng Phân Rã Chi Tiết 4 Nguồn Dữ Liệu Thực Tế (Data Ingestion Pipeline)
+### 🔍 1.1. Ma Trận 4 Nguồn Dữ Liệu & Kế Hoạch Vượt Rào Cản Phân Quyền (Governance Strategy)
 
-Dự án không dựa trên dữ liệu giả định mà tận dụng trực tiếp 4 luồng dữ liệu sẵn có trong hệ sinh thái số của Vingroup:
+Dự án thừa nhận thẳng thắn rào cản bảo mật và xây dựng cơ chế nạp dữ liệu phân tầng (Tiered Ingestion):
 
 ```text
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
-│ HẠ TẦNG KẾT NỐI DỮ LIỆU ĐỐI SOÁT GIAN LẬN THỜI GIAN THỰC (VIN SMART FUTURE)           │
-├──────────────────────────────┬─────────────────────────────┬───────────────────────────┤
-│ 1. Telematics Phần Cứng Xe   │ 2. Telemetry Ứng Dụng GSM   │ 3. CSKH CRM & Ground Truth│
-│ (VinFast Connected Car)      │ (GSM Dispatch Backend)      │ (Zendesk / Contact Center)│
-├──────────────────────────────┼─────────────────────────────┼───────────────────────────┤
-│ • Module phần cứng T-Box     │ • App Xanh SM Rider & Driver│ • Ticket khiếu nại lịch sử│
-│ • MQTT over TLS / AWS IoT    │ • REST API & WebSocket      │ • Audio ghi âm cuộc gọi   │
-│ • Tần suất: 1–5s/ping        │ • Timestamp sự kiện click   │ • Nhãn kết quả đối soát   │
-└──────────────┬───────────────┴──────────────┬──────────────┴─────────────┬─────────────┘
-               │                              │                            │
-               ▼                              ▼                            ▼
-         ┌───────────────────────────────────────────────────────────────────────┐
-         │ Dịch Vụ Đối Soát Tự Động (Smart Dispute & GPS Divergence Copilot)     │
-         │ - Gemini 2.5 Flash: NLP trích xuất thực thể khiếu nại                 │
-         │ - Spatial Engine: Tính độ lệch Haversine GPS xe vs GPS khách          │
-         │ - Policy Engine: Áp ranh giới an toàn (≤ 150.000đ & Score >= 0.90)    │
-         └──────────────────────────────────┬────────────────────────────────────┘
-                                            │
-                                            ▼
-                          ┌───────────────────────────────────┐
-                          │ 4. Cổng Thanh Toán Hoàn Tiền      │
-                          │ (VinFast Pay / VNPay / MoMo API)  │
-                          └───────────────────────────────────┘
+│ PHÂN TẦNG QUYỀN HẠN & CHIẾN LƯỢC TIẾP CẬN DỮ LIỆU AN TOÀN (DATA GOVERNANCE TIER)      │
+├────────────────────────────────────────────────────────────────────────────────────────┤
+│ 🛑 TẦNG PRODUCTION (HIỆN CHƯA CẤP PHÉP - KHÔNG TRUY CẬP TRỰC TIẾP):                   │
+│  • VinFast Telematics Core (T-Box MQTT) ──> CSDL GPS xe thời gian thực                │
+│  • GSM Transactional DB (PostgreSQL)   ──> Thông tin định danh khách & tài xế         │
+│  • Payment Gateway Refund API          ──> Cổng trừ/hoàn tiền tài khoản ngân hàng     │
+│  ==> Rào cản: Nghị định 13/2023/NĐ-CP, Bảo mật tài chính, Rủi ro thất thoát.          │
+├────────────────────────────────────────────────────────────────────────────────────────┤
+│                                        │ (Pipeline Làm Sạch & Ẩn Danh Hóa - 2 Tuần)    │
+│                                        ▼                                               │
+│ ✅ TẦNG SANDBOX / STAGING (ĐƯỢC PHÉP TRUY CẬP PHÁT TRIỂN PROTOTYPE):                  │
+│  • Anonymized Data Dump: 10.000 cuốc xe lịch sử (Đã Hash SĐT, xóa Tên, làm mờ GPS).   │
+│  • Mock Telemetry Server: Stub API giả lập luồng tọa độ GPS xe và khách để test model.│
+│  • Dummy Refund Service: Ghi log giao dịch hoàn tiền giả định (Mock Transaction).      │
+└────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-#### Chi tiết thông số kỹ thuật từng nguồn dữ liệu:
-
-1. **📡 Nguồn 1: Log Định vị GPS phần cứng Xe điện (In-vehicle Hardware Telematics):**
-   * **Nơi lưu trữ & Thiết bị:** Hộp điều khiển viễn thông **T-Box (Telematics Box)** tích hợp sẵn trên xe điện VinFast (VF 5 Plus, VF e34, VF 8) trong đội xe GSM.
-   * **Giao thức truyền dẫn:** T-Box phát tín hiệu định vị qua eSIM 4G/LTE bằng giao thức **MQTT over TLS** về cổng **AWS IoT Core** của VinFast Connected Car Platform.
-   * **Trường dữ liệu thực tế (Schema):** `vin` (mã định danh xe), `device_timestamp`, `gps_latitude`, `gps_longitude`, `speed_kmh`, `heading_deg`, `odometer_km`, `gear_status` (P/R/N/D).
-   * **Đường dẫn API lấy về (Production):** `GET /api/v1/telematics/trips/{trip_id}/vehicle-breadcrumbs` (truy vấn chuỗi tọa độ xe trong khung giờ diễn ra cuốc).
-
-2. **📱 Nguồn 2: Log Tọa độ & Sự kiện trên Ứng dụng Di động (Mobile App Rider & Driver Telemetry):**
-   * **Nơi lưu trữ:** CSDL giao dịch và sự kiện chuyến đi của GSM Backend (chạy trên PostgreSQL / ClickHouse).
-   * **Trường dữ liệu thực tế (Schema):**
-     * *Rider App:* `rider_id`, `pickup_lat_requested`, `pickup_lng_requested`, `rider_realtime_lat`, `rider_realtime_lng`, `request_timestamp`.
-     * *Driver App:* `driver_id`, `driver_lat_at_click`, `driver_lng_at_click`, `event_type` (`ACTION_ACCEPT`, `ACTION_ARRIVED_PICKUP`, `ACTION_START_TRIP`, `ACTION_COMPLETE_TRIP`, `ACTION_CANCEL`), `event_timestamp`.
-   * **Đường dẫn API lấy về (Production):** `GET /api/v1/dispatch/trips/{trip_id}/lifecycle-events`.
-
-3. **🎧 Nguồn 3: Dữ liệu Lịch sử Khiếu nại & Nhãn Kiểm Thử (Dispute Tickets & Ground Truth):**
-   * **Nơi lưu trữ:** Hệ thống CRM Contact Center của CSKH Xanh SM (quản lý ticket tổng đài 1900 2088 và in-app report).
-   * **Trường dữ liệu thực tế (Schema):** `ticket_id`, `trip_id`, `complaint_channel` (`IN_APP_FORM` / `VOICE_CALL`), `complaint_text` (nội dung khiếu nại của khách), `audio_recording_url`, `final_decision` (`REFUND_APPROVED`, `REFUND_REJECTED`, `DRIVER_FINED`), `dispute_reason_code` (`NO_SHOW_DRIVER_STALLED`, `FAKE_COMPLETION`), `actual_refund_amount_vnd`.
-   * **Khối lượng dữ liệu Ground Truth:** Hơn **25.000 ticket lịch sử** đã được chuyên viên đối soát bằng tay trong quá khứ ➔ Dùng làm tập dữ liệu vàng (Gold Validation Dataset) để đo lường độ chính xác (Precision/Recall) của mô hình trước khi Go-live.
-   * **Đường dẫn API lấy về:** `GET /api/v2/support/tickets?category=DISPUTE_GHOST_RIDE&status=SOLVED`.
-
-4. **💳 Nguồn 4: Cổng Kích hoạt Hoàn tiền Tự động (Payment Gateway Integration):**
-   * **Nơi kết nối:** Cổng thanh toán nội bộ VinFast Pay / VinID Pay liên kết VNPay, Ví MoMo và cổng thẻ Napas/Visa/Mastercard.
-   * **Khả năng thực thi:** API hoàn tiền `POST /api/v1/payments/refund-transaction` đã hoạt động ổn định trong sản xuất cho các giao dịch hoàn hủy tiêu chuẩn của tập đoàn.
+#### Chi tiết giải pháp kỹ thuật vượt rào cản cho từng nguồn:
+1. **📡 GPS Xe (VinFast T-Box) & GPS Khách (GSM App):** 
+   * *Rào cản:* Chặn quyền truy cập mạng nội bộ giữa 2 công ty; nguy cơ lộ vị trí riêng tư.
+   * *Giải pháp khả thi:* Xin cấp phép trích xuất **1 tập dữ liệu tĩnh đóng băng (Static Snapshot ~ 10.000 cuốc)** đã được thuật toán K-Anonymity làm mờ 2 chữ số thập phân cuối của tọa độ (đảm bảo độ chính xác đo khoảng cách tương đối nhưng không lộ số nhà cụ thể).
+2. **🎧 Dữ liệu Lịch sử Khiếu nại (CSKH CRM Ground Truth):** 
+   * *Rào cản:* Chứa số điện thoại và ghi âm giọng nói của khách hàng.
+   * *Giải pháp khả thi:* Chạy script chạy ngầm ẩn danh hóa (PII Redaction): Thay thế toàn bộ số điện thoại thành token mã hóa một chiều `[REDACTED_PHONE_HASH]`, chuyển văn bản khiếu nại thành dữ liệu thuần dạng Text.
+3. **💳 Cổng Hoàn tiền (Payment Gateway API):** 
+   * *Rào cản:* Nguy cơ rò rỉ quỹ tài chính nếu prompt injection hoặc AI bị lỗi logic.
+   * *Giải pháp khả thi:* Tuyệt đối không cấp Production API Key. Sử dụng **Mock Payment Gateway** (môi trường Sandbox) chỉ trả về mã giả lập `{"status": "SUCCESS", "mock_refund_id": "RF123456"}` để kiểm thử toàn diện luồng nghiệp vụ.
 
 ---
 
-### 🏛️ 2. Quyết định của Ban Giám đốc Vin Smart Future
+### 🏛️ 2. Quyết định Chính thức của Ban Giám đốc Vin Smart Future
 
-> ### **QUYẾT ĐỊNH CHÍNH THỨC: [ x ] GO (Triển khai Xây dựng Bản mẫu)**
+Dựa trên tiêu chí chấm điểm **G4 (Decision Quality — Đánh giá trung thực, dựa trên bằng chứng kỹ thuật và rào cản thực tế)**, dự án đưa ra quyết định:
 
-#### 💡 Lý giải Quyết định (Justification):
-1. **Giá trị Kinh doanh vượt trội (High ROI & Churn Prevention):** Chi phí phát triển mô hình ước tính rất thấp (chỉ dùng Gemini 2.5 Flash kết hợp hàm toán học Haversine GPS có sẵn). Ngược lại, giải pháp giúp bảo vệ doanh thu hàng tỷ đồng mỗi năm bằng cách chặn đứng rò rỉ khách hàng trung thành, giảm 85% nhân lực CSKH tra soát tay.
-2. **Độ phức tạp kỹ thuật vừa phải, tính khả thi cao (High Feasibility):** Không cần huấn luyện model nền tảng từ đầu. Tận dụng sức mạnh suy luận tiếng Việt vượt trội của Gemini 2.5 Flash để trích xuất thông tin khiếu nại, kết hợp với các logic toán học của hệ tọa độ GIS có sẵn của Vingroup.
-3. **Chiến lược Triển khai An toàn (Phased Rollout):**
-   * *Giai đoạn 1 (Tuần 1–2):* Chạy chế độ "Shadow Mode" (AI phân tích ngầm và so sánh với kết quả đối soát tay của con người mà chưa tự động hoàn tiền).
-   * *Giai đoạn 2 (Tuần 3–4):* Bật Auto-Refund thử nghiệm cho 10% cuốc xe dưới 100.000 VNĐ tại khu vực Hà Nội.
-   * *Giai đoạn 3 (Tháng tiếp theo):* Scale toàn bộ hệ thống taxi Xanh SM toàn quốc.
+> ### **QUYẾT ĐỊNH CHÍNH THỨC: [ x ] NOT YET (Trì hoãn Triển khai Production — Triển khai 4 Tuần Chuẩn bị Data Governance & Sandbox)**
+
+#### 💡 Lý giải Quyết định Trung thực (Evidence-based Justification):
+1. **Vì sao KHÔNG CHỌN "GO" ngay lập tức?**
+   * Nếu chọn "GO" và tuyên bố kết nối thẳng vào Production API ngay hôm nay là **thiếu trung thực và vi phạm nghiêm trọng quy chuẩn An toàn thông tin doanh nghiệp**.
+   * Nhóm kỹ sư AI hiện tại chưa có quyền hạn pháp lý để truy cập dữ liệu GPS nhạy cảm của khách hàng theo **Nghị định 13/2023/NĐ-CP** và chưa có thỏa thuận chia sẻ dữ liệu (DSA) liên pháp nhân giữa VinFast và GSM.
+2. **Vì sao KHÔNG CHỌN "NO-GO"?**
+   * Bài toán có giá trị kinh tế khổng lồ: Chặn đứng rò rỉ khách hàng (Churn rate), giải tỏa áp lực cho hàng trăm nhân viên CSKH và bảo vệ hình ảnh thương hiệu taxi điện văn minh của Xanh SM.
+   * Công nghệ hoàn toàn khả thi: Logic toán học Haversine và năng lực NLP tiếng Việt của Gemini 2.5 Flash đã sẵn sàng.
+3. **Lộ trình 4 Tuần chuyển đổi từ `NOT YET` sang `GO` (Action Plan):**
+   * **Tuần 1 – 2 (Pháp lý & An toàn thông tin):**
+     * Trình Hội đồng Quản trị ký kết Thỏa thuận chia sẻ dữ liệu (DSA) giữa VinFast và GSM dưới sự bảo trợ của Vin Smart Future.
+     * Hoàn thành hồ sơ Đánh giá tác động xử lý dữ liệu cá nhân (DPIA).
+   * **Tuần 3 (Data Engineering & Sandbox Creation):**
+     * Thiết lập Data Pipeline tự động ẩn danh hóa PII (Masking số điện thoại, làm mờ tọa độ).
+     * Xuất 10.000 cuốc xe lịch sử đã gán nhãn vào môi trường AWS S3 Staging Sandbox.
+     * Dựng Mock Telematics API & Mock Payment Gateway để đội ngũ AI dev kiểm thử.
+   * **Tuần 4 (Benchmark & Transition to GO):**
+     * Đo lường hiệu năng mô hình trên Sandbox. Khi F1-Score đạt ≥ 98.5% và tỷ lệ hoàn tiền nhầm = 0%, Ban Giám đốc sẽ chính thức ký lệnh **GO** để triển khai thử nghiệm diện hẹp (Pilot 10% tại Hà Nội).
