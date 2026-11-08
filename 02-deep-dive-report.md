@@ -2,7 +2,7 @@
 ## Dự án: Hệ thống Giám sát Gian lận Cuốc xe Thời gian thực & Tự động Đối soát Hoàn tiền (Smart Dispute & GPS Divergence Copilot)
 **Đơn vị phát triển:** Vin Smart Future (Vingroup)  
 **Khối kinh doanh phối hợp:** Công ty Cổ phần Di chuyển Xanh và Thông minh (GSM — Xanh SM)  
-**Tác giả thực hiện:** Kỹ sư AI Product (Nhánh: `lyslama`)  
+**Tác giả thực hiện:** Kỹ sư AI Product (Nhánh / Mã SV: `2A202603475`)  
 
 ---
 

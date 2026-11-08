@@ -1,6 +1,6 @@
 # 03 — Nhật ký Tương tác & Phản biện AI (AI Thought-Partner Log)
 
-**Người thực hiện:** Kỹ sư AI Product (Nhánh: `lyslama`)  
+**Người thực hiện:** Kỹ sư AI Product (Nhánh / Mã SV: `2A202603475`)  
 **Phạm vi công việc:** Scoping bài toán vận hành (Phase 1–2), Phân tích sâu bài toán gian lận cuốc xe Xanh SM (Phase 3 & 5), và Lập trình kiểm thử ranh giới Prompt trên Gemini 2.5 Flash (Phase 4).
 
 ---
