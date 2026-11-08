@@ -8,7 +8,7 @@
 
 ## 🏛️ 1. Bối cảnh & Tuyên bố Bài toán
 
-Tại Khối Vận hành của **Xanh SM (GSM)**, trải nghiệm khách hàng và tính minh bạch là hai trụ cột cốt lõi để xây dựng hình ảnh thương hiệu taxi điện văn minh. Tuy nhiên, qua phân tích thực tế từ các kênh mạng xã hội (Otofun, Reddit r/Vietnam) và dữ liệu khiếu nại nội bộ, một điểm nóng gây bức xúc nghiêm trọng nhất hiện nay là tình trạng tài xế:
+Tại Khối Vận hành của **Xanh SM (GSM)**, qua tổng hợp phản ánh từ người dùng trên mạng xã hội (Otofun, Reddit r/Vietnam) và dữ liệu khiếu nại nội bộ, tình trạng gian lận cuốc xe của tài xế đang diễn ra theo hai hình thức chính:
 * **"Ngâm cuốc":** Tài xế nhận cuốc nhưng không di chuyển đón khách, đứng im hoặc cố tình đi hướng ngược lại nhằm gây áp lực để khách hàng tự hủy cuốc (tránh bị phạt điểm tỷ lệ chấp nhận và giữ thưởng ngày 200k - 300k).
 * **"Hoàn thành khống":** Tài xế bấm "Đã đón khách" và "Hoàn thành chuyến" khống dù không hề có khách trên xe để nhận tiền từ thẻ/ví điện tử của khách đã liên kết.
 
