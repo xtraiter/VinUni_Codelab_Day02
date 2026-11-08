@@ -1,0 +1,1 @@
+Trong qua trinh lam bai, em da su dung AI de ho tro len y tuong va ve anh workflow, ngoai ra em con dung de ho tro debug, sua loi trong phan code
